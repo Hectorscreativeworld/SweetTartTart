@@ -10,6 +10,6 @@ namespace SweetTartTartApi.Models
     public string ShortDescription { get; set; }
     public int NumberInStock { get; set; }
     public int Price { get; set; }
-    public int DateOrdered { get; set; }
+    public DateTime DateOrdered { get; set; }
   }
 }

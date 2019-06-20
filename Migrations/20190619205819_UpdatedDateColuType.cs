@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace sweettarttart.Migrations
 {
-    public partial class TartItemsTable : Migration
+    public partial class UpdatedDateColuType : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,7 +19,7 @@ namespace sweettarttart.Migrations
                     ShortDescription = table.Column<string>(nullable: true),
                     NumberInStock = table.Column<int>(nullable: false),
                     Price = table.Column<int>(nullable: false),
-                    DateOrdered = table.Column<int>(nullable: false)
+                    DateOrdered = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
