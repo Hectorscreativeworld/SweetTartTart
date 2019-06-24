@@ -1,6 +1,6 @@
 using System;
 
-namespace SweetTartTartApi.Models
+namespace SweetTartTartApi.Model
 {
   public class SweetTartTart
   {
@@ -11,5 +11,8 @@ namespace SweetTartTartApi.Models
     public int NumberInStock { get; set; }
     public int Price { get; set; }
     public DateTime DateOrdered { get; set; }
+
+    public int? LocationId { get; set; }
+    public Location Location { get; set; }
   }
 }

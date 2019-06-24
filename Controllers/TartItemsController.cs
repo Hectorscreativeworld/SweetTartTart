@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using sweettarttart;
-using SweetTartTartApi.Models;
+using SweetTartTartApi.Model;
 
 
 
@@ -39,14 +39,33 @@ namespace SweetTartTartApi.Controllers
       return rv.ToList();
     }
 
-    [HttpPost]
-    public ActionResult<SweetTartTart> Post([FromBody]SweetTartTart candy)
+
+    [HttpPost("{locationId}")]
+    public ActionResult<SweetTartTart> Post([FromBody]SweetTartTart tartitem, [FromQuery]int locationId)
     {
 
-      db.TartItems.Add(candy);
+      // get the user that has teh access token
+      var location = db.Locations.FirstOrDefault(l => l.Id == locationId);
+      if (location == null)
+      {
+        // if the user doesnt exist, make it
+        location = new Location
+        {
+          Id = locationId
+        };
+        db.Locations.Add(location);
+        db.SaveChanges();
+      }
+      // set the the item.UserId = user.id
+      // somethingGoofy.UserId = user.Id;
+      // db.ToDoItems.Add(somethingGoofy);
+
+      location.Items.Add(tartitem);
+
       db.SaveChanges();
-      return candy;
+      return tartitem;
     }
+
 
     [HttpPut("{id}")]
     public ActionResult<SweetTartTart> UpdateItem([FromRoute]int id, [FromBody]SweetTartTart item)
@@ -59,6 +78,7 @@ namespace SweetTartTartApi.Controllers
       candy.ShortDescription = item.ShortDescription;
       candy.NumberInStock = item.NumberInStock;
       candy.Price = item.Price;
+      candy.LocationId = item.LocationId;
       db.SaveChanges();
       return candy;
     }

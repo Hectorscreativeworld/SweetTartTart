@@ -2,7 +2,7 @@
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using SweetTartTartApi.Models;
+using SweetTartTartApi.Model;
 
 namespace sweettarttart
 {
@@ -46,6 +46,7 @@ namespace sweettarttart
 
     }
     public DbSet<SweetTartTart> TartItems { get; set; }
+    public DbSet<Location> Locations { get; set; }
   }
 
 }
