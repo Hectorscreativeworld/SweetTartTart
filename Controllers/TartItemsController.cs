@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using sweettarttart;
 using SweetTartTartApi.Model;
 
@@ -22,11 +23,11 @@ namespace SweetTartTartApi.Controllers
       this.db = new DatabaseContext();
     }
     [HttpGet]
-    public ActionResult<List<SweetTartTart>> Get()
+    public ActionResult<List<SweetTartTart>> Get([FromQuery] int locationId)
     {
       // get all of our TartItem items
 
-      var rv = db.TartItems;
+      var rv = db.TartItems.Include(i => i.Location).Where(w => w.LocationId == locationId);
       return rv.ToList();
     }
 
@@ -88,7 +89,7 @@ namespace SweetTartTartApi.Controllers
     {
       var db = new DatabaseContext();
       // i need to update the item text, complete, and updated at
-      var candy = db.TartItems.FirstOrDefault(f => f.Id == id);
+      var candy = db.TartItems.Include(i => i.Location).FirstOrDefault(f => f.Id == id);
       if (candy == null)
       {
         return NotFound();
@@ -114,7 +115,7 @@ namespace SweetTartTartApi.Controllers
     public ActionResult DeleteItem(int id)
     {
 
-      var item = db.TartItems.FirstOrDefault(f => f.Id == id);
+      var item = db.TartItems.Include(i => i.Location).FirstOrDefault(f => f.Id == id);
       if (item == null)
       {
         return NotFound();
